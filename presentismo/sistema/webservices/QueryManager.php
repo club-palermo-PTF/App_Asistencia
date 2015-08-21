@@ -23,7 +23,16 @@ class QueryManager {
 		   	$persona = array("ID" => $object->getObjectId(), 'Nombre' => $usuario->get("Nombre"), "Apellido" => $usuario->get("Apellido"), "Presente" => $object->get("Presente"));
 		   	array_push($listado, $persona);
 		}
+		
+		//definimos una función para ordenar el array con nuestros parámetros
+		function custom_sort($a,$b) {
+        	return $a['Nombre']>$b['Nombre'];
+     	}
 
+		//ordenamos el array
+    	usort($listado, "custom_sort");
+
+    	//transformamos a json
 		$json = json_encode($listado);
 		echo $json;
 	}

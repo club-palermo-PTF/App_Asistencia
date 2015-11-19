@@ -5,7 +5,7 @@ header('Content-type: application/json');
 $METHOD = $_SERVER['REQUEST_METHOD'];
 $APIURI = $_SERVER['REQUEST_URI'];
 
-if ($METHOD == 'POST') {
+if ($METHOD == 'GET') {
 
  	require('LogoutManager.php');
 	
@@ -15,5 +15,5 @@ if ($METHOD == 'POST') {
 } else {
 
  	header('HTTP/1.1 405 Method Not Allowed');
-	header('Allow: POST');
+	header('Allow: GET');
 }

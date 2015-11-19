@@ -7,13 +7,15 @@ $APIURI = $_SERVER['REQUEST_URI'];
 
 if ($METHOD == 'GET') {
 
- 	require('LogoutManager.php');
+ 	require('ToExcelManager.php');
 	
-	$logoutManager = new LogoutManager();
-	$logoutManager->logout();
-
+	$toExcelManager = new ToExcelManager();
+	$toExcelManager->toExcel();
+	
+	
 } else {
 
  	header('HTTP/1.1 405 Method Not Allowed');
 	header('Allow: GET');
+
 }

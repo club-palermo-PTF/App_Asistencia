@@ -132,6 +132,28 @@
           </div>
         </footer>
 
+
+        <div class="logout-holder">
+          <a href="#" class="logout">Salir</a>
+        </div>
+
+        <div id="modalAdduser">
+          <div>
+            <form action="#" id="form_adduser">
+              <input type="text" name="nombre" value="" placeholder="Nombre">
+              <input type="text" name="apellido" value="" placeholder="Apellido">
+              <input type="text" name="email" value="" placeholder="Email">
+              <select name="sede">
+                <option value="palermo">Palermo</option>
+                <option value="baldomero">Baldomero</option>
+                <option value="cortazar">Cortazar</option>
+              </select>
+              <input type="hidden" name="tipo" value="alumno">
+              <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect btn-login" type="submit">Entrar</button>
+            </form>
+          </div>
+        </div>
+
       </main>
     </div>
 
@@ -176,9 +198,6 @@
             data_form[input.attr("name")] = input.val();
             delete data_form["undefined"];
           });
-          
-          console.log(data_form);
-          console.dir(data_form);
 
           $.ajax({
            cache: false,
@@ -261,6 +280,54 @@
             });
         }
 
+
+        // agregar usuario 
+        $("#form_adduser").submit(function(e) {
+          e.preventDefault();
+          var data_form = {};
+          var data;
+          var response;
+          var Form = this;
+          
+          $.each(this.elements, function(i, v){
+            var input = $(v);
+            data_form[input.attr("name")] = input.val();
+            delete data_form["undefined"];
+          });
+
+          $.ajax({
+           cache: false,
+           url: 'sistema/webservices/Service_registration.php',
+           type: 'POST',
+           dataType: 'json',
+           data: JSON.stringify(data_form),
+           context: Form,
+           beforeSend: function() {
+                console.log('before');
+                console.log(response);
+                console.log(data);
+                console.log(data_form);
+                // show loading
+            },
+            complete: function() {
+                console.log("complete");
+                // hide loading
+            },
+            success: function(response){
+                console.log('success: '+response);
+                
+            },
+            error: function(response) {
+                console.log("error");
+                console.log(response);
+            }
+          });
+        });
+        
+        $(document).on('click', '.logout', function() {
+          Cookies.remove('ptf-login');
+          window.location='sistema/webservices/Service_logout.php';
+        });
       }
     </script>
   </body>
